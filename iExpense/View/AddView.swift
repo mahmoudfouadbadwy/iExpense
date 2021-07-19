@@ -10,12 +10,10 @@ import SwiftUI
 struct AddView: View {
     
     @State private var name = ""
-    @State private var type = "Personal"
+    @State private var type = ExpenseType.personal
     @State private var amount = ""
-    
     @ObservedObject var expenses: Expenses
     
-    private static let types = ["Business", "Personal"]
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -24,8 +22,8 @@ struct AddView: View {
             Form {
                 TextField("Name", text: $name)
                 Picker("Type", selection: $type) {
-                    ForEach(Self.types, id: \.self) {
-                        Text($0)
+                    ForEach(ExpenseType.allCases, id: \.self) {
+                        Text($0.text)
                     }
                 }
                 TextField("Amount", text: $amount)
@@ -36,7 +34,7 @@ struct AddView: View {
                                     Button("Save") {
                                         if let actualAmount = Int(self.amount) {
                                             let item = ExpenseItem(name: self.name,
-                                                                   type: self.type,
+                                                                   type: self.type.text,
                                                                    amount: actualAmount)
                                             self.expenses.items.append(item)
                                             self.dismissView()
