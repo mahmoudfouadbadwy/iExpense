@@ -22,7 +22,8 @@ struct AddView: View {
             Form {
                 TextField("Name", text: $name)
                 Picker("Type", selection: $type) {
-                    ForEach(ExpenseType.allCases, id: \.self) {
+                    ForEach(ExpenseType.allCases,
+                            id: \.self) {
                         Text($0.text)
                     }
                 }
@@ -30,16 +31,19 @@ struct AddView: View {
                     .keyboardType(.numberPad)
             }
             .navigationBarTitle("Add new expense")
-            .navigationBarItems(trailing:
-                                    Button("Save") {
-                                        if let actualAmount = Int(self.amount) {
-                                            let item = ExpenseItem(name: self.name,
-                                                                   type: self.type.text,
-                                                                   amount: actualAmount)
-                                            self.expenses.items.append(item)
-                                            self.dismissView()
-                                        }
-                                    }
+            .navigationBarItems(
+                trailing:
+                    Button(self.name.isEmpty ? "Close" : "Save") {
+                        if let actualAmount = Int(self.amount) {
+                            let item = ExpenseItem(
+                                     name: self.name,
+                                     type: self.type.text,
+                                     amount: actualAmount
+                            )
+                            self.expenses.items.append(item)
+                        }
+                        self.dismissView()
+                    }
             )
         }
     }

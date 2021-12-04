@@ -29,13 +29,16 @@ struct ContentView: View {
                 .onDelete(perform: removeItems(at:))
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(leading:  EditButton(),
-                                trailing:
-                                    Button(action: {
-                                        self.shwoingAddExpense = true
-                                    }) {
-                                        Image(systemName: "plus")
-                                    }
+            .navigationBarItems(
+                leading:
+                    EditButton()
+                    .disabled(expenses.items.isEmpty),
+                trailing:
+                    Button(
+                        action: { self.shwoingAddExpense = true }
+                    ) {
+                        Image(systemName: "plus")
+                    }
             )
         }
         .sheet(isPresented: $shwoingAddExpense) {
