@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var shwoingAddExpense = false
-    @ObservedObject var expenses = Expenses()
+    @StateObject var expenses = Expenses()
     
     var body: some View {
         
@@ -35,10 +35,11 @@ struct ContentView: View {
                     .disabled(expenses.items.isEmpty),
                 trailing:
                     Button(
-                        action: { self.shwoingAddExpense = true }
-                    ) {
-                        Image(systemName: "plus")
-                    }
+                        action: { 
+                            self.shwoingAddExpense = true
+                        }) {
+                            Image(systemName: "plus")
+                        }
             )
         }
         .sheet(isPresented: $shwoingAddExpense) {
